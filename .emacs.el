@@ -1,3 +1,6 @@
+
+(size-indication-mode t)
+
 ;; show the column number in status
 (column-number-mode t)
 
@@ -33,6 +36,16 @@
 
 ;; disable the scroll bar
 (scroll-bar-mode nil)
+
+;; indicate empt lines
+(setq indicate-empty-lines t)
+
+;; do not show start-up message
+(setq inhibit-startup-message t)
+
+;; replace highlighted text with what I type rather than just inserting at a
+;; point
+(delete-selection-mode t)
 
 ;; Pgup/dn will return exactly to the starting point.
 (setq scroll-preserve-screen-position 1)
