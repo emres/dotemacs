@@ -1,5 +1,9 @@
 
+;; show the size of the file in kb, mb, etc.
 (size-indication-mode t)
+
+;; show line numbers on the left
+(global-linum-mode 1)
 
 ;; show the column number in status
 (column-number-mode t)
