@@ -87,6 +87,10 @@
 ;; auto-install
 (add-to-list 'load-path (expand-file-name "~/elisp"))
 (require 'auto-install)
+(add-to-list 'load-path "~/.emacs.d/auto-install/")
+
+;; sunrise-commander file manager
+(require 'sunrise-commander)
 
 ;; use MS Windows file associations for dired
 ;; (load "w32-browser")
