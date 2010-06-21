@@ -84,6 +84,10 @@
 (setq uniquify-ignore-buffers-re "^\\*")
 
 
+;; auto-install
+(add-to-list 'load-path (expand-file-name "~/elisp"))
+(require 'auto-install)
+
 ;; use MS Windows file associations for dired
 ;; (load "w32-browser")
 
