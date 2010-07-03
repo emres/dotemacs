@@ -157,3 +157,10 @@
 
 ;; move the mouse pointer out of cursor's way
 (mouse-avoidance-mode t)
+
+;; automatically type matching (, [, {, ", etc. and place the cursor inside
+(require 'autopair)
+(autopair-global-mode t) ;; enable autopair in all buffers 
+(setq autopair-autowrap t)
+
+
