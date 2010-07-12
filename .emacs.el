@@ -41,7 +41,7 @@
 ;; disable the scroll bar
 (scroll-bar-mode nil)
 
-;; indicate empt lines
+;; indicate empty lines
 (setq indicate-empty-lines t)
 
 ;; do not show start-up message
@@ -82,6 +82,18 @@
 (setq uniquify-separator "|")
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
+
+
+;; enable full-screen mode and assign it to F11
+(defun toggle-fullscreen (&optional f)
+  (interactive)
+  (let ((current-value (frame-parameter nil 'fullscreen)))
+       (set-frame-parameter nil 'fullscreen
+                            (if (equal 'fullboth current-value)
+                                (if (boundp 'old-fullscreen) old-fullscreen nil)
+                                (progn (setq old-fullscreen current-value)
+                                       'fullboth)))))
+(global-set-key [f11] 'toggle-fullscreen)
 
 
 ;; auto-install
