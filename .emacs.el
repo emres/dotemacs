@@ -175,4 +175,5 @@
 (autopair-global-mode t) ;; enable autopair in all buffers 
 (setq autopair-autowrap t)
 
-
+;; turkish-mode
+(load "~/elisp/turkish.el")
