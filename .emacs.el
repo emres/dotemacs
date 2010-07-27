@@ -186,3 +186,22 @@
 (setq tab-width 4)
 (setq c-basic-indent 4)
 
+;; auto-load mode setup
+(add-to-list 'load-path "~/.emacs.d/")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+(ac-config-default)
+
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
+
+(autoload 'pymacs-apply "pymacs")
+(autoload 'pymacs-call "pymacs")
+(autoload 'pymacs-eval "pymacs" nil t)
+(autoload 'pymacs-exec "pymacs" nil t)
+(autoload 'pymacs-load "pymacs" nil t)
+(pymacs-load "ropemacs" "rope-")
+(setq ropemacs-enable-autoimport t)
+
+(require 'auto-complete)
+(global-auto-complete-mode t)
