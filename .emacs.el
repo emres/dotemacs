@@ -205,3 +205,7 @@
 
 (require 'auto-complete)
 (global-auto-complete-mode t)
+
+;; mic-paren mode for advanced parantheses matching
+(require 'mic-paren) ; loading
+(paren-activate)     ; activating
