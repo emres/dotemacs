@@ -70,6 +70,15 @@
 ;; remember recently opened files
 (recentf-mode t)
 
+;; keep the backup files (files ending in ~) in a central place
+;; and keep previous versions of backup files, just in case
+(setq backup-directory-alist `(("." . "~/.emacs-backup-files")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
+
 ;; set winner-mode on, which helps to do 
 ;; some quick window configuration
 (winner-mode 1)
