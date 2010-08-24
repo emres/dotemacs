@@ -50,6 +50,9 @@
 ;; highlight the line that cursor is on
 (global-hl-line-mode t)
 
+;; Move between windows using shift + arrow keys
+(windmove-default-keybindings)  
+
 ;; replace highlighted text with what I type rather than just inserting at a
 ;; point
 (delete-selection-mode t)
