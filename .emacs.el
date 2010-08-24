@@ -47,6 +47,9 @@
 ;; do not show start-up message
 (setq inhibit-startup-message t)
 
+;; highlight the line that cursor is on
+(global-hl-line-mode t)
+
 ;; replace highlighted text with what I type rather than just inserting at a
 ;; point
 (delete-selection-mode t)
