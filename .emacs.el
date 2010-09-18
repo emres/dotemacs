@@ -48,7 +48,7 @@
 (setq inhibit-startup-message t)
 
 ;; highlight the line that cursor is on
-(global-hl-line-mode t)
+;; (global-hl-line-mode t)
 
 ;; Move between windows using shift + arrow keys
 (windmove-default-keybindings)  
