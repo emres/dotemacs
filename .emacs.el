@@ -116,6 +116,15 @@
 (require 'auto-install)
 (add-to-list 'load-path "~/.emacs.d/auto-install/")
 
+
+;; js2 mode by Yegge http://code.google.com/p/js2-mode/
+(setq load-path (append 
+				 (list (expand-file-name "~/.emacs.d/js2")) 
+				 load-path))
+
+(autoload 'js2-mode "js2" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
 ;; sunrise-commander file manager
 (require 'sunrise-commander)
 
