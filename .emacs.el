@@ -51,7 +51,7 @@
 ;; (global-hl-line-mode t)
 
 ;; Move between windows using shift + arrow keys
-(windmove-default-keybindings)  
+(windmove-default-keybindings)
 
 ;; replace highlighted text with what I type rather than just inserting at a
 ;; point
@@ -85,7 +85,7 @@
   kept-old-versions 2
   version-control t)
 
-;; set winner-mode on, which helps to do 
+;; set winner-mode on, which helps to do
 ;; some quick window configuration
 (winner-mode 1)
 
@@ -118,8 +118,8 @@
 
 
 ;; js2 mode by Yegge http://code.google.com/p/js2-mode/
-(setq load-path (append 
-				 (list (expand-file-name "~/.emacs.d/js2")) 
+(setq load-path (append
+				 (list (expand-file-name "~/.emacs.d/js2"))
 				 load-path))
 
 (autoload 'js2-mode "js2" nil t)
@@ -132,7 +132,7 @@
 ;; (load "w32-browser")
 
 ;; Enable current line highlighting when dired is loaded
-(defun my-dired-hook-mode () 
+(defun my-dired-hook-mode ()
   (hl-line-mode))
 (add-hook 'dired-mode-hook 'my-dired-hook-mode)
 
@@ -155,7 +155,7 @@
   "Sort dired listings with directories first."
   (save-excursion
     (let (buffer-read-only)
-      (forward-line 2) ;; beyond dir. header 
+      (forward-line 2) ;; beyond dir. header
       (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
     (set-buffer-modified-p nil)))
 
@@ -181,7 +181,7 @@
 ;; multiple major modes in a buffer
 (setq mumamo-global-mode t)
 
-;; When you visit a file, point goes to the last place 
+;; When you visit a file, point goes to the last place
 ;; where it was when you previously visited the same file.
 (require 'saveplace)
 (setq-default save-place t)
@@ -196,7 +196,7 @@
 
 ;; automatically type matching (, [, {, ", etc. and place the cursor inside
 (require 'autopair)
-(autopair-global-mode t) ;; enable autopair in all buffers 
+(autopair-global-mode t) ;; enable autopair in all buffers
 (setq autopair-autowrap t)
 
 ;; turkish-mode
@@ -233,3 +233,34 @@
 ;; mic-paren mode for advanced parantheses matching
 (require 'mic-paren) ; loading
 (paren-activate)     ; activating
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Begin whitespace-mode related setttings
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; nuke trailing whitespaces when writing to a file
+(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+
+;; display only tails of lines longer than 80 columns, tabs and
+;; trailing whitespaces
+(setq whitespace-line-column 80
+      whitespace-style '(tabs trailing lines-tail))
+
+;; face for long lines' tails
+;; (set-face-attribute 'whitespace-line nil
+;;                     :background "red1"
+;;                     :foreground "yellow"
+;;                     :weight 'bold)
+
+;; face for Tabs
+;; (set-face-attribute 'whitespace-tab nil
+;;                     :background "red1"
+;;                     :foreground "yellow"
+;;                     :weight 'bold)
+
+;; activate minor whitespace mode when in python mode
+(add-hook 'python-mode-hook 'whitespace-mode)
+;;
+;; End whitespace-mode related settings
+;;
