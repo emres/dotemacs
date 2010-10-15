@@ -230,6 +230,9 @@
 (require 'auto-complete)
 (global-auto-complete-mode t)
 
+(add-hook 'python-mode-hook 'imenu-add-menubar-index)
+(global-set-key [mouse-3] 'imenu)
+
 ;; mic-paren mode for advanced parantheses matching
 (require 'mic-paren) ; loading
 (paren-activate)     ; activating
