@@ -240,7 +240,8 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; nuke trailing whitespaces when writing to a file
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 
 ;; display only tails of lines longer than 80 columns, tabs and
 ;; trailing whitespaces
