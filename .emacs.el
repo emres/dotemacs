@@ -98,6 +98,8 @@
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
 
+;; Assign ibuffer to C-x C-b
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; enable full-screen mode and assign it to F11
 (defun toggle-fullscreen (&optional f)
