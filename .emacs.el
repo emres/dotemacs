@@ -279,5 +279,7 @@
 (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
 (global-srecode-minor-mode 1)            ; Enable template insertion menu
 
-
+;; ECB related settings - Emacs Code Browser
+(add-to-list 'load-path "~/elisp/ecb-2.40")
+(require 'ecb)
 
