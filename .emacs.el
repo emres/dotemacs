@@ -267,6 +267,17 @@
 
 ;; activate minor whitespace mode when in python mode
 (add-hook 'python-mode-hook 'whitespace-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; End whitespace-mode related settings
 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; CEDET related settings
+(load-file "~/elisp/cedet-1.0/common/cedet.el")
+(global-ede-mode 1)                      ; Enable the Project management system
+(semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
+(global-srecode-minor-mode 1)            ; Enable template insertion menu
+
+
+
