@@ -207,7 +207,7 @@
 ;; tab width setup
 (setq indicate-empty-lines t)
 (setq indent-tabs-mode t)
-(setq-default indent-tabs-mode t)
+(setq-default indent-tabs-mode nil)
 (setq default-tab-width 4)
 (setq tab-width 4)
 (setq c-basic-indent 4)
