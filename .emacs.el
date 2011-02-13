@@ -218,6 +218,10 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 
+;; python-mode relates settings
+(require 'python-mode)
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
+
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 
