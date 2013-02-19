@@ -287,7 +287,6 @@
 (add-to-list 'load-path "~/elisp/ecb-2.40")
 (require 'ecb)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Begin scala-mode related setttings
