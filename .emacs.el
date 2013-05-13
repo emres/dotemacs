@@ -47,6 +47,11 @@
 ;; do not show start-up message
 (setq inhibit-startup-message t)
 
+;; packages installed via package.el to should be
+;; initalized before we start tweaking them.
+(require 'package)
+(package-initialize)
+
 ;; highlight the line that cursor is on
 ;; (global-hl-line-mode t)
 
