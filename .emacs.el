@@ -18,7 +18,7 @@
 (setq font-lock-maximum-decoration t)
 (global-font-lock-mode t)
 
-;; match parantheses
+;; match parentheses
 (show-paren-mode t)
 
 ;; save minibuffer history
@@ -48,7 +48,7 @@
 (setq inhibit-startup-message t)
 
 ;; packages installed via package.el to should be
-;; initalized before we start tweaking them.
+;; initialized before we start tweaking them.
 (require 'package)
 (package-initialize)
 
@@ -258,7 +258,7 @@
 
 
 ;; display only tails of lines longer than 80 columns, tabs and
-;; trailing whitespaces
+;; trailing white spaces
 (setq whitespace-line-column 80
       whitespace-style '(tabs trailing lines-tail))
 
@@ -309,7 +309,7 @@
 (add-hook 'scala-mode-hook 'scala-turnoff-indent-tabs-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; End scala-mode related setttings
+;; End scala-mode related settings
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
