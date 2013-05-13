@@ -1,4 +1,10 @@
 
+;; disable menu-bar-mode
+(menu-bar-mode -1)
+
+;; disable tool-bar-mode
+(tool-bar-mode -1)
+
 ;; show the size of the file in kb, mb, etc.
 (size-indication-mode t)
 
@@ -23,12 +29,6 @@
 
 (set-scroll-bar-mode 'right)
 
-;; disable the tool bar
-(tool-bar-mode nil)
-
-;; disable the menu bar
-(menu-bar-mode nil)
-
 ;; display the time in status line
 (display-time-mode t)
 
@@ -39,7 +39,7 @@
 (setq-default fill-column 80)
 
 ;; disable the scroll bar
-(scroll-bar-mode nil)
+(scroll-bar-mode -1)
 
 ;; indicate empty lines
 (setq indicate-empty-lines t)
