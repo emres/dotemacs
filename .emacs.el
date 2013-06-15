@@ -18,6 +18,9 @@
 (setq font-lock-maximum-decoration t)
 (global-font-lock-mode t)
 
+;; set default font face to Source Code Pro 9
+(set-default-font "Source Code Pro-9")
+
 ;; match parentheses
 (show-paren-mode t)
 
