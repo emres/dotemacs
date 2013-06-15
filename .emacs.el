@@ -210,6 +210,9 @@
 ;; http://www.emacswiki.org/emacs/InteractivelyDoThings
 (require 'ido)
 (ido-mode t)
+(setq ido-enable-flex-matching t); flexibly match names
+(setq ido-everywhere t); use ido-mode everywhere, in buffers, finding files
+(setq ido-use-filename-at-point 'guess); for find-file-at-point
 
 ;; move the mouse pointer out of cursor's way
 (mouse-avoidance-mode t)
