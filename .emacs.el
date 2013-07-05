@@ -96,6 +96,8 @@
 
 ;; remember recently opened files
 (recentf-mode t)
+;; set F7 to open a list of recently opened file
+(global-set-key (kbd "<f7>") 'recentf-open-files)
 
 ;; keep the backup files (files ending in ~) in a central place
 ;; and keep previous versions of backup files, just in case
@@ -326,16 +328,16 @@
 ;; Begin scala-mode related setttings
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-to-list 'load-path
-             "~/Documents/programming/scala/scala-2.9.0.1/misc/scala-tool-support/emacs/")
+;; (add-to-list 'load-path
+;;              "~/Documents/programming/scala/scala-2.9.0.1/misc/scala-tool-support/emacs/")
 
-(require 'scala-mode-auto)
+;; (require 'scala-mode-auto)
 
-(defun scala-turnoff-indent-tabs-mode ()
-  (setq indent-tabs-mode nil))
+;; (defun scala-turnoff-indent-tabs-mode ()
+;;   (setq indent-tabs-mode nil))
 
-;; scala mode hooks
-(add-hook 'scala-mode-hook 'scala-turnoff-indent-tabs-mode)
+;; ;; scala mode hooks
+;; (add-hook 'scala-mode-hook 'scala-turnoff-indent-tabs-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; End scala-mode related settings
