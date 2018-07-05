@@ -1,104 +1,189 @@
-
-;; disable menu-bar-mode
-(menu-bar-mode -1)
-
-;; disable tool-bar-mode
-(tool-bar-mode -1)
-
-;; show the size of the file in kb, mb, etc.
-(size-indication-mode t)
-
-;; show line numbers on the left
-(global-linum-mode 1)
-
-;; show the column number in status
-(column-number-mode t)
-
-;; syntax highlighting related
-(setq font-lock-maximum-decoration t)
-(global-font-lock-mode t)
-
-;; set default font face to Source Code Pro 9
-(set-default-font "Source Code Pro-9")
-
-;; match parentheses
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (show-paren-mode t)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+(display-time-mode t)
+(setq column-number-mode t)
+(defalias 'yes-or-no-p 'y-or-n-p)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq indent-tabs-mode t)
+(setq-default indent-tabs-mode nil)
+(setq default-tab-width 4)
+(setq tab-width 4)
+(setq c-basic-indent 4)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MELPA
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Fringe settings
+(defun my-tone-down-fringes ()
+  (set-face-attribute 'fringe nil
+                      :foreground (face-foreground 'default)
+                      :background (face-background 'default)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Show which key combinations are available
+(which-key-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; scrolling settings
+(set-scroll-bar-mode nil)
+(setq scroll-step 1
+      scroll-conservatively 10000)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; theme settings
+(load-theme 'wombat)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; save minibuffer history
 (savehist-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; When running on Unix and X handle correct clipboard functionality
-(setq x-select-enable-clipboard t)
 
-(set-scroll-bar-mode 'right)
-
-;; display the time in status line
-(display-time-mode t)
-
-;; alias y to yes and n to no
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-;; set the fill column
-(setq-default fill-column 80)
-
-;; disable the scroll bar
-(scroll-bar-mode -1)
-
-;; indicate empty lines
-(setq indicate-empty-lines t)
-
-;; do not show start-up message
-(setq inhibit-startup-message t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; package manager related settings
-;; packages installed via package.el to should be
-;; initialized before we start tweaking them.
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives
-               '("melpa" . "http://melpa.milkbox.net/packages/") t))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End package manager related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; highlight the line that cursor is on
-;; (global-hl-line-mode t)
-
-;; Move between windows using shift + arrow keys
-(windmove-default-keybindings)
-
-;; replace highlighted text with what I type rather than just inserting at a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; replace highlighted text with what is typed rather than just inserting at a
 ;; point
 (delete-selection-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Pgup/dn will return exactly to the starting point.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; PgUp/Dn will return exactly to the starting point.
 (setq scroll-preserve-screen-position 1)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; scroll just one line when hitting the bottom of the window
 (setq scroll-step 1)
 (setq scroll-conservatively 1)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; format the title-bar to always include the buffer name
 (setq frame-title-format "emacs - %b - %f")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; highlight incremental search
-(setq search-highlight t)
 
-;; iswitchb-mode activation
-(iswitchb-mode 1)
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; remember recently opened files
 (recentf-mode t)
 ;; set F7 to open a list of recently opened file
 (global-set-key (kbd "<f7>") 'recentf-open-files)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; When you visit a file, point goes to the last place
+;; where it was when you previously visited the same file.
+(save-place-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; do not show start-up message
+(setq inhibit-startup-message t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; highlight incremental search
+(setq search-highlight t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; set the fill column
+(setq-default fill-column 80)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; set up windmove so that you can jump to windows using Shift+<Arrow Keys>
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+;; Or you can use enhanced switch-window functionality
+(global-set-key (kbd "C-x o") 'switch-window)
+;; Or you can use M-1, M-2, M-3 to go to a window
+(window-numbering-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; For more details, please see:
+;; https://github.com/abo-abo/swiper
+(ivy-mode t)
+(global-set-key (kbd "C-s") 'swiper)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "C-x C-f") 'counsel-find-file)
+(setq ivy-display-style 'fancy)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-height 10)
+(setq ivy-display-style 'fancy)
+(setq ivy-count-format "(%d/%d) ")
+;;advise swiper to recenter on exit
+(defun bjm-swiper-recenter (&rest args)
+  "recenter display after swiper"
+  (recenter))
+(advice-add 'swiper :after #'bjm-swiper-recenter)
+
+;; version of ivy-yank-word to yank from start of word
+(defun bjm/ivy-yank-whole-word ()
+  "Pull next word from buffer into search string."
+  (interactive)
+  (let (amend)
+    (with-ivy-window
+      ;;move to last word boundary
+      (re-search-backward "\\b")
+      (let ((pt (point))
+            (le (line-end-position)))
+        (forward-word 1)
+        (if (> (point) le)
+            (goto-char pt)
+          (setq amend (buffer-substring-no-properties pt (point))))))
+    (when amend
+      (insert (replace-regexp-in-string "  +" " " amend)))))
+
+;; bind it to M-j
+(define-key ivy-minibuffer-map (kbd "M-j") 'bjm/ivy-yank-whole-word)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Company Mode related settings (COMPlete ANYthing)
+(global-company-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keep the backup files (files ending in ~) in a central place
 ;; and keep previous versions of backup files, just in case
 (setq backup-directory-alist `(("." . "~/.emacs-backup-files")))
@@ -107,11 +192,42 @@
   kept-new-versions 6
   kept-old-versions 2
   version-control t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; set winner-mode on, which helps to do
-;; some quick window configuration
-(winner-mode 1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(projectile-global-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq-default indicate-empty-lines t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; For details, see the following web page:
+;; http://oremacs.com/2015/01/17/setting-up-ediff/
+(defmacro csetq (variable value)
+  `(funcall (or (get ',variable 'custom-set)
+                'set-default)
+            ',variable ,value))
+
+(csetq ediff-window-setup-function 'ediff-setup-windows-plain)
+(csetq ediff-split-window-function 'split-window-horizontally)
+(csetq ediff-diff-options "-w")
+
+(winner-mode)
+(add-hook 'ediff-after-quit-hook-internal 'winner-undo)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'misc)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; I use uniquify to distinguish between two identically named files as the
 ;; default, appending a <n> extension, is rubbish. This tip is from Trey
 ;; Jackson.
@@ -120,295 +236,90 @@
 (setq uniquify-separator "|")
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
-
-;; Assign ibuffer to C-x C-b
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; enable full-screen mode and assign it to F11
-(defun toggle-fullscreen (&optional f)
-  (interactive)
-  (let ((current-value (frame-parameter nil 'fullscreen)))
-       (set-frame-parameter nil 'fullscreen
-                            (if (equal 'fullboth current-value)
-                                (if (boundp 'old-fullscreen) old-fullscreen nil)
-                                (progn (setq old-fullscreen current-value)
-                                       'fullboth)))))
-(global-set-key [f11] 'toggle-fullscreen)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; auto-install
-(add-to-list 'load-path (expand-file-name "~/elisp"))
-(require 'auto-install)
-(add-to-list 'load-path "~/.emacs.d/auto-install/")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(electric-pair-mode 1)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Turkish Mode for converting ASCII to proper Turkish characters
+(require 'turkish)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; js2 mode by Yegge http://code.google.com/p/js2-mode/
-(setq load-path (append
-				 (list (expand-file-name "~/.emacs.d/js2"))
-				 load-path))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; The higlighting should be just a darker background, and nothing else
+(require 'color)
 
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-;; sunrise-commander file manager
-(require 'sunrise-commander)
-
-;; use MS Windows file associations for dired
-;; (load "w32-browser")
-
-;; Enable current line highlighting when dired is loaded
-(defun my-dired-hook-mode ()
-  (hl-line-mode))
-(add-hook 'dired-mode-hook 'my-dired-hook-mode)
-
-;; Enable dired-x when dired is invoked
-(add-hook 'dired-load-hook
-	  (lambda ()
-	    (load "dired-x")
-	    ;; Set dired-x global variables here.  For example:
-	    ;; (setq dired-guess-shell-gnutar "gtar")
-	    ;; (setq dired-x-hands-off-my-keys nil)
-	    ))
-(add-hook 'dired-mode-hook
-	  (lambda ()
-	    ;; Set dired-x buffer-local variables here.  For example:
-	    ;; (setq dired-omit-files-p t)
-	    ))
-
-;; Sort directories first, dired related modes
-(defun mydired-sort ()
-  "Sort dired listings with directories first."
-  (save-excursion
-    (let (buffer-read-only)
-      (forward-line 2) ;; beyond dir. header
-      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max)))
-    (set-buffer-modified-p nil)))
-
-(defadvice dired-readin
-  (after dired-after-updating-hook first () activate)
-  "Sort dired listings with directories first before adding marks."
-  (mydired-sort))
-
-;; Setup dired to let you nicely copy stuff inbetween two dired
-;; windows.
-(setq dired-dwim-target t)
-
-;; recursive copy without prompt
-(setq dired-recursive-copies 'always)
-
-;; dired-aux
-(require 'dired-aux)
-
-;; dired-x
-;;(require 'dired-x)
-;; (require 'dired-single)
-
-;; multiple major modes in a buffer
-(setq mumamo-global-mode t)
-
-;; When you visit a file, point goes to the last place
-;; where it was when you previously visited the same file.
-(require 'saveplace)
-(setq-default save-place t)
-
-;; ido-mode enabled: interactively do things
-;; http://www.emacswiki.org/emacs/InteractivelyDoThings
-(require 'ido)
-(ido-mode t)
-(setq ido-enable-flex-matching t) ; flexibly match names
-(setq ido-everywhere t)           ; use ido-mode everywhere
-(setq ido-use-filename-at-point 'guess) ; for find-file-at-point
-
-;; move the mouse pointer out of cursor's way
-(mouse-avoidance-mode t)
-
-;; automatically type matching (, [, {, ", etc. and place the cursor inside
-(require 'autopair)
-(autopair-global-mode t) ;; enable autopair in all buffers
-(setq autopair-autowrap t)
-
-;; turkish-mode
-(load "~/elisp/turkish.el")
-
-;; tab width setup
-(setq indicate-empty-lines t)
-(setq indent-tabs-mode t)
-(setq-default indent-tabs-mode nil)
-(setq default-tab-width 4)
-(setq tab-width 4)
-(setq c-basic-indent 4)
-
-;; auto-load mode setup
-(add-to-list 'load-path "~/.emacs.d/")
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
-(ac-config-default)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Begin python-mode related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'python-mode)
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-
-(require 'pymacs)
-(pymacs-load "ropemacs" "rope-")
-
-(autoload 'pymacs-apply "pymacs")
-(autoload 'pymacs-call "pymacs")
-(autoload 'pymacs-eval "pymacs" nil t)
-(autoload 'pymacs-exec "pymacs" nil t)
-(autoload 'pymacs-load "pymacs" nil t)
-(pymacs-load "ropemacs" "rope-")
-(setq ropemacs-enable-autoimport t)
-
-(add-hook 'python-mode-hook 'imenu-add-menubar-index)
-(global-set-key [mouse-3] 'imenu)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End python-mode related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(require 'auto-complete)
-(global-auto-complete-mode t)
+(defun set-hl-line-color-based-on-theme ()
+  "Sets the hl-line face to have no foregorund and a background
+    that is 10% darker than the default face's background."
+  (set-face-attribute 'hl-line nil
+                      :foreground nil
+              :underline nil
+              :background (color-darken-name
+                   (face-background 'default) 10)))
 
 
-;; mic-paren mode for advanced parantheses matching
-(require 'mic-paren) ; loading
-(paren-activate)     ; activating
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Begin whitespace-mode related setttings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; nuke trailing whitespaces when writing to a file
-(add-hook 'before-save-hook 'whitespace-cleanup)
+(add-hook 'global-hl-line-mode-hook 'set-hl-line-color-based-on-theme)
+(global-hl-line-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; display only tails of lines longer than 80 columns, tabs and
-;; trailing white spaces
-(setq whitespace-line-column 80
-      whitespace-style '(tabs trailing lines-tail))
-
-;; face for long lines' tails
-;; (set-face-attribute 'whitespace-line nil
-;;                     :background "red1"
-;;                     :foreground "yellow"
-;;                     :weight 'bold)
-
-;; face for Tabs
-;; (set-face-attribute 'whitespace-tab nil
-;;                     :background "red1"
-;;                     :foreground "yellow"
-;;                     :weight 'bold)
-
-;; activate minor whitespace mode when in python mode
-(add-hook 'python-mode-hook 'whitespace-mode)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End whitespace-mode related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; CEDET related settings
-(load-file "~/elisp/cedet-1.0/common/cedet.el")
-(global-ede-mode 1)                      ; Enable the Project management system
-(semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
-(global-srecode-minor-mode 1)            ; Enable template insertion menu
-
-;; ECB related settings - Emacs Code Browser
-(add-to-list 'load-path "~/elisp/ecb-2.40")
-(require 'ecb)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Begin scala-mode related setttings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-to-list 'load-path
-;;              "~/Documents/programming/scala/scala-2.9.0.1/misc/scala-tool-support/emacs/")
-
-;; (require 'scala-mode-auto)
-
-;; (defun scala-turnoff-indent-tabs-mode ()
-;;   (setq indent-tabs-mode nil))
-
-;; ;; scala mode hooks
-;; (add-hook 'scala-mode-hook 'scala-turnoff-indent-tabs-mode)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End scala-mode related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Begin automatic white-space insertion after comma
-;; For more information see:
-;; http://ericscrosson.wordpress.com/2013/04/05/minimizing-keystrokes-required-by-punctuation/
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd ",")
-                (lambda() (interactive) (insert ", ")))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End automatic white-space insertion after comma
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(set-cursor-color "LightBlue")
+(my-tone-down-fringes)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Begin ess-mode related setttings (R project)
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(load "~/.emacs.d/ess-13.05/lisp/ess-site")
-(require 'ess-site)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End ess-mode related setttings (R project)
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(powerline-default-theme)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Begin yasnippet
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'yasnippet)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End yasnippet
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; spaceline modeline theme and separator related
+;; https://www.reddit.com/r/spacemacs/comments/4lqzfk/setq_powerlinedefaultseparator_arrow_not_working/?st=j4f8kih8&sh=6e7eaef8
+;; https://github.com/TheBB/spaceline
+;; https://github.com/dbordak/telephone-line
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'spaceline-config)
+(spaceline-spacemacs-theme)
+(setq powerline-default-separator 'wave)
+(spaceline-compile)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Begin AUCTeX related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End AUCTeX related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package dired-sidebar
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar)
+  :config
+  (use-package all-the-icons-dired
+    ;; M-x all-the-icons-install-fonts
+    :ensure t
+    :commands (all-the-icons-dired-mode)))
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Begin expand-region related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'expand-region)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(add-hook 'Info-selection-hook 'info-colors-fontify-node)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(mode-icons-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(yas-global-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "C-=") 'er/expand-region)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; End expand-region related settings
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
