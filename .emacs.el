@@ -1,3 +1,22 @@
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
+ '(package-selected-packages
+   '(helpful avy paradox autopair expand-region yasnippet-snippets yasnippet info-colors mode-icons rg all-the-icons-dired dired-sidebar use-package counsel-tramp which-key windresize magit magit-annex magit-filenotify magit-find-file spaceline spaceline-all-the-icons spacemacs-theme turkish projectile company swiper window-numbering window-number switch-window))
+ '(paradox-github-token t)
+ '(show-paren-mode t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (show-paren-mode t)
 (tool-bar-mode 0)
@@ -249,19 +268,19 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; The higlighting should be just a darker background, and nothing else
+;; The workaround for preventing underlined highlighted lines in dark themes
+;; such as wombat. For more information, please see:
+;; https://github.com/syl20bnr/spacemacs/issues/2786#issuecomment-268814650
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'color)
 
 (defun set-hl-line-color-based-on-theme ()
-  "Sets the hl-line face to have no foregorund and a background
-    that is 10% darker than the default face's background."
+  "This is required as a workaround to prevent underlined
+    highlighted lines."
   (set-face-attribute 'hl-line nil
-                      :foreground nil
-              :underline nil
-              :background (color-darken-name
-                   (face-background 'default) 10)))
+                      :underline nil))
 
-
+(set-face-foreground 'highlight nil)
 (add-hook 'global-hl-line-mode-hook 'set-hl-line-color-based-on-theme)
 (global-hl-line-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
