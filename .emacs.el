@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(helpful avy paradox autopair expand-region yasnippet-snippets yasnippet info-colors mode-icons rg all-the-icons-dired dired-sidebar use-package counsel-tramp which-key windresize magit magit-annex magit-filenotify magit-find-file spaceline spaceline-all-the-icons spacemacs-theme turkish projectile company swiper window-numbering window-number switch-window))
+   '(excorporate helpful avy paradox autopair expand-region yasnippet-snippets yasnippet info-colors mode-icons rg all-the-icons-dired dired-sidebar use-package counsel-tramp which-key windresize magit magit-annex magit-filenotify magit-find-file spaceline spaceline-all-the-icons spacemacs-theme turkish projectile company swiper window-numbering window-number switch-window))
  '(paradox-github-token t)
  '(show-paren-mode t))
 (custom-set-faces
@@ -278,7 +278,10 @@
   "This is required as a workaround to prevent underlined
     highlighted lines."
   (set-face-attribute 'hl-line nil
-                      :underline nil))
+                      :underline nil
+                      :background (color-darken-name
+                                   (face-background 'default)
+                                   10)))
 
 (set-face-foreground 'highlight nil)
 (add-hook 'global-hl-line-mode-hook 'set-hl-line-color-based-on-theme)
