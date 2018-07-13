@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(package-selected-packages
-   '(excorporate helpful avy paradox autopair expand-region yasnippet-snippets yasnippet info-colors mode-icons rg all-the-icons-dired dired-sidebar use-package counsel-tramp which-key windresize magit magit-annex magit-filenotify magit-find-file spaceline spaceline-all-the-icons spacemacs-theme turkish projectile company swiper window-numbering window-number switch-window))
+   '(wanderlust excorporate helpful avy paradox autopair expand-region yasnippet-snippets yasnippet info-colors mode-icons rg all-the-icons-dired dired-sidebar use-package counsel-tramp which-key windresize magit magit-annex magit-filenotify magit-find-file spaceline spaceline-all-the-icons spacemacs-theme turkish projectile company swiper window-numbering window-number switch-window))
  '(paradox-github-token t)
  '(show-paren-mode t))
 (custom-set-faces
@@ -28,11 +28,9 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq indent-tabs-mode t)
+;; Only spaces, no tabs
 (setq-default indent-tabs-mode nil)
-(setq default-tab-width 4)
-(setq tab-width 4)
-(setq c-basic-indent 4)
+(setq-default tab-width 2)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
