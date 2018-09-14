@@ -5,9 +5,12 @@
 can be used directly via `load`."
   (with-temp-file filename
     (insert
-     (format "%s" "(setf my-packages '")
-     (format "%S" package-activated-list)
-     (format "%s" ")"))))
+     (format "%s" "(setf my-packages '(")
+     (format "%s" (cl-loop for package in package-activated-list
+                           concat (format "%s\n" package)
+                           into my-result
+                           finally return my-result))
+     (format "%s" "))"))))
 
 ;; Example usage to write to currently installed packages to a file:
 ;; (emre/write-installed-packages-to-file "packages.txt")
