@@ -7,9 +7,7 @@ can be used directly via `load`."
     (insert
      (format "%s" "(setf my-packages '(")
      (format "%s" (cl-loop for package in package-activated-list
-                           concat (format "%s\n" package)
-                           into my-result
-                           finally return my-result))
+                           concat (format "%s\n" package)))
      (format "%s" "))"))))
 
 ;; Example usage to write to currently installed packages to a file:
