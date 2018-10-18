@@ -1,4 +1,4 @@
-(setf my-packages '(mwim
+(setf my-packages '(highlight-indent-guides
 all-the-icons-dired
 autopair
 avy
@@ -29,6 +29,7 @@ git-commit
 ghub
 magit-popup
 mode-icons
+mwim
 paradox
 hydra
 projectile
