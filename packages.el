@@ -1,4 +1,6 @@
-(setf my-packages '(highlight-indent-guides
+(setf my-packages '(discover
+makey
+yafolding
 all-the-icons-dired
 autopair
 avy
@@ -17,6 +19,7 @@ helpful
 elisp-refs
 f
 dash-functional
+highlight-indent-guides
 info-colors
 ini-mode
 ipcalc
