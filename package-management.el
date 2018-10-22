@@ -23,6 +23,6 @@ can be used directly via `load`."
 (defun emre/install-all-packages-from-file (filename)
   "Install all the packages from the given filename."
   (progn
-    (load "/home/emre/packages.txt")
+    (load filename)
     (loop for package in my-packages do
-          (require-package package))))
+          (emre/require-package package))))
