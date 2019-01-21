@@ -471,3 +471,22 @@ selected from `fringe-bitmaps'.")
              (overlay-put ov 'before-string fringe-anchor))))
          (overlays-at (ad-get-arg 1))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; This is for automatically generating the PDF file for the current AsciiDoc
+;; that you are editing. It adds a new hook (function) to be automatically run
+;; after each save action in `adoc-mode'.
+;; 
+;; If you enable `auto-revert-mode' in your PDF viewing mode, then you'll be
+;; to have Live Preview functionality for your AsciiDoc document.
+;;
+;; The following code assumes the existence of `asciidoc' package. For more
+;; details, please see http://asciidoc.org/
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun run-a2x-to-generate-pdf ()
+    "Generate the PDF representation of the current file."
+    (when (eq major-mode 'adoc-mode)
+      (shell-command-to-string (format "a2x -f pdf %s" buffer-file-name))))
+
+(add-hook 'after-save-hook #'run-a2x-to-generate-pdf)
