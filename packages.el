@@ -1,6 +1,4 @@
-(setf my-packages '(discover
-makey
-yafolding
+(setf my-packages '(adoc-mode
 all-the-icons-dired
 autopair
 avy
@@ -12,6 +10,7 @@ csv-mode
 dired-sidebar
 dired-subtree
 dired-hacks-utils
+discover
 excorporate
 expand-region
 fsm
@@ -31,10 +30,13 @@ magit
 git-commit
 ghub
 magit-popup
+makey
+markup-faces
 mode-icons
 mwim
 paradox
 hydra
+pdf-tools
 projectile
 pkg-info
 epl
@@ -52,6 +54,7 @@ spinner
 swiper
 ivy
 switch-window
+tablist
 turkish
 url-http-ntlm
 use-package
@@ -66,6 +69,7 @@ window-numbering
 windresize
 with-editor
 async
+yafolding
 yasnippet-snippets
 yasnippet
 ))
