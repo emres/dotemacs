@@ -30,6 +30,7 @@
 (display-time-mode t)
 (setq column-number-mode t)
 (defalias 'yes-or-no-p 'y-or-n-p)
+(setq calendar-week-start-day 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
