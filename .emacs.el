@@ -546,3 +546,23 @@ selected from `fringe-bitmaps'.")
                       nil
                       'make-it-local)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set up MS Windows specific configuration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Check if system is Microsoft Windows
+(defun my-system-type-is-windows ()
+  "Return true if system is Windows-based (at least up to Win7)"
+  (string-equal system-type "windows-nt"))
+
+(when (my-system-type-is-windows)
+  (setq ispell-program-name "aspell"))
+
+;; Set default font
+(set-face-attribute 'default nil
+                    :family "Consolas"
+                    :height 100
+                    :weight 'normal
+                    :width 'normal)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
