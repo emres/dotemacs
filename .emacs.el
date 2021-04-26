@@ -1,22 +1,3 @@
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
- '(package-selected-packages
-   '(company-statistics wanderlust excorporate helpful avy paradox autopair expand-region yasnippet-snippets yasnippet info-colors mode-icons rg all-the-icons-dired dired-sidebar use-package counsel-tramp which-key windresize magit magit-annex magit-filenotify magit-find-file spaceline spaceline-all-the-icons spacemacs-theme turkish projectile company swiper window-numbering window-number switch-window))
- '(paradox-github-token t)
- '(show-paren-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq user-full-name "Emre Sevinç")
 (setq user-mail-address "emre.sevinc@gmail.com")
@@ -42,30 +23,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; MELPA
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(when (< emacs-major-version 24)
-  ;; For important compatibility libraries like cl-lib
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-
-;;see https://emacs.stackexchange.com/a/48943/8887 for more details
-(package-initialize)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Fringe settings
-(defun my-tone-down-fringes ()
-  (set-face-attribute 'fringe nil
-                      :foreground (face-foreground 'default)
-                      :background (face-background 'default)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Show which key combinations are available
-(which-key-mode t)
+(setq-default indicate-empty-lines t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -74,12 +32,25 @@
 (set-scroll-bar-mode nil)
 (setq scroll-step 1
       scroll-conservatively 10000)
+
+;; scroll just one line when hitting the bottom of the window
+(setq scroll-step 1)
+(setq scroll-conservatively 1)
+
+;; PgUp/Dn will return exactly to the starting point.
+(setq scroll-preserve-screen-position 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; theme settings
-(load-theme 'wombat)
+;; do not show start-up message
+(setq inhibit-startup-message t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; highlight incremental search
+(setq search-highlight t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -97,15 +68,14 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; PgUp/Dn will return exactly to the starting point.
-(setq scroll-preserve-screen-position 1)
+;; theme settings
+(load-theme 'wombat)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; scroll just one line when hitting the bottom of the window
-(setq scroll-step 1)
-(setq scroll-conservatively 1)
+;; line number mode
+(global-linum-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -130,85 +100,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; do not show start-up message
-(setq inhibit-startup-message t)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; highlight incremental search
-(setq search-highlight t)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; set the fill column
 (setq-default fill-column 80)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; set up windmove so that you can jump to windows using Shift+<Arrow Keys>
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
-;; Or you can use enhanced switch-window functionality
-(global-set-key (kbd "C-x o") 'switch-window)
-;; Or you can use M-1, M-2, M-3 to go to a window
-(window-numbering-mode t)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; For more details, please see:
-;; https://github.com/abo-abo/swiper
-(ivy-mode t)
-(global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(setq ivy-display-style 'fancy)
-(setq ivy-use-virtual-buffers t)
-(setq ivy-height 10)
-(setq ivy-display-style 'fancy)
-(setq ivy-count-format "(%d/%d) ")
-;;advise swiper to recenter on exit
-(defun bjm-swiper-recenter (&rest args)
-  "recenter display after swiper"
-  (recenter))
-(advice-add 'swiper :after #'bjm-swiper-recenter)
-
-;; version of ivy-yank-word to yank from start of word
-(defun bjm/ivy-yank-whole-word ()
-  "Pull next word from buffer into search string."
-  (interactive)
-  (let (amend)
-    (with-ivy-window
-      ;;move to last word boundary
-      (re-search-backward "\\b")
-      (let ((pt (point))
-            (le (line-end-position)))
-        (forward-word 1)
-        (if (> (point) le)
-            (goto-char pt)
-          (setq amend (buffer-substring-no-properties pt (point))))))
-    (when amend
-      (insert (replace-regexp-in-string "  +" " " amend)))))
-
-;; bind it to M-j
-(define-key ivy-minibuffer-map (kbd "M-j") 'bjm/ivy-yank-whole-word)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Company Mode related settings (COMPlete ANYthing)
-(global-company-mode t)
-(company-statistics-mode)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -220,15 +115,6 @@
   kept-new-versions 6
   kept-old-versions 2
   version-control t)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(projectile-global-mode)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq-default indicate-empty-lines t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -255,9 +141,140 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; I use uniquify to distinguish between two identically named files as the
-;; default, appending a <n> extension, is rubbish. This tip is from Trey
-;; Jackson.
+;; MELPA
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+
+;;see https://emacs.stackexchange.com/a/48943/8887 for more details
+(package-initialize)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set up use-package
+;;
+;; This is only needed once, near the top of the file
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+  ;;(add-to-list 'load-path "<path where use-package is installed>")
+  (require 'use-package))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Fringe settings
+(defun my-tone-down-fringes ()
+  (set-face-attribute 'fringe nil
+                      :foreground (face-foreground 'default)
+                      :background (face-background 'default)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Show which key combinations are available
+(use-package which-key
+  :ensure t
+  :config (which-key-mode t))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; set up windmove so that you can jump to windows using Shift+<Arrow Keys>
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
+;; Or you can use M-1, M-2, M-3 to go to a window
+(use-package window-numbering
+  :ensure t
+  :config (window-numbering-mode t))
+
+(use-package switch-window
+  :ensure t
+  :bind ("C-x o" . 'switch-window))
+
+(use-package windresize
+  :ensure t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; For more details, please see:
+;; https://github.com/abo-abo/swiper
+(use-package counsel
+  :ensure t
+  :bind (("C-s" . 'swiper)
+         ("M-x" . 'counsel-M-x)
+         ("C-x C-f" . 'counsel-find-file)
+         (:map ivy-minibuffer-map
+               ("M-j" . 'bjm/ivy-yank-whole-word)))
+  :init
+  (setq ivy-display-style 'fancy)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-height 10)
+  (setq ivy-display-style 'fancy)
+  (setq ivy-count-format "(%d/%d) ")
+  :config
+  (ivy-mode t)
+  (defun bjm/ivy-yank-whole-word ()
+    "Pull next word from buffer into search string."
+    (interactive)
+    (let (amend)
+      (with-ivy-window
+        ;;move to last word boundary
+        (re-search-backward "\\b")
+        (let ((pt (point))
+              (le (line-end-position)))
+          (forward-word 1)
+          (if (> (point) le)
+              (goto-char pt)
+            (setq amend (buffer-substring-no-properties pt (point))))))
+      (when amend
+        (insert (replace-regexp-in-string "  +" " " amend))))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Company Mode related settings (COMPlete ANYthing)
+(use-package company-statistics
+  :ensure t
+  :config
+  (company-statistics-mode))
+
+(use-package company
+  :ensure t
+  :requires company-statistics
+  :config
+  (global-company-mode))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("s-p" . projectile-command-map)
+              ("C-c p" . projectile-command-map)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Use uniquify to distinguish between two identically named files as the
+;; default, appending a <n> extension, is rubbish. This tip is from Trey Jackson
 ;; http://curiousprogrammer.wordpress.com/2009/04/28/emacs-hacks/
 (setq uniquify-buffer-name-style 'reverse)
 (setq uniquify-separator "|")
@@ -265,14 +282,14 @@
 (setq uniquify-ignore-buffers-re "^\\*")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (electric-pair-mode 1)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Turkish Mode for converting ASCII to proper Turkish characters
-(require 'turkish)
+(use-package turkish
+  :ensure t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -305,7 +322,9 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(powerline-default-theme)
+(use-package powerline
+  :config
+  (powerline-default-theme))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -313,11 +332,33 @@
 ;; https://www.reddit.com/r/spacemacs/comments/4lqzfk/setq_powerlinedefaultseparator_arrow_not_working/?st=j4f8kih8&sh=6e7eaef8
 ;; https://github.com/TheBB/spaceline
 ;; https://github.com/dbordak/telephone-line
+;;
+;; https://github.com/domtronn/all-the-icons.el
+;;
+;; In order for the icons to work it is very important that you
+;; install the Resource Fonts included in this package, they are
+;; available in the fonts directory. You can also install the
+;; latest fonts for this package in the (guessed?) based on the OS
+;; by calling the following function
+;;
+;;     M-x all-the-icons-install-fonts
+;;
+;; Bear in mind, this will also run fc-cache -f -v on MacOS and
+;; Linux which can take some time to complete. For Windows, this
+;; function will prompt for a download directory for you to install
+;; them manually. 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(require 'spaceline-config)
-(spaceline-spacemacs-theme)
-(setq powerline-default-separator 'wave)
-(spaceline-compile)
+(use-package all-the-icons
+  :ensure t)
+
+(use-package spaceline
+  :config
+  (spaceline-spacemacs-theme))
+
+;; I've disabled this for now, because it seems like it's consuming too much CPU
+;; (use-package spaceline-all-the-icons 
+;;   :after spaceline
+;;   :config (spaceline-all-the-icons-theme))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -338,30 +379,46 @@
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'Info-selection-hook 'info-colors-fontify-node)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(mode-icons-mode t)
+(use-package info-colors
+  :ensure t
+  :config
+  (add-hook 'Info-selection-hook 'info-colors-fontify-node))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(yas-global-mode t)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "C-=") 'er/expand-region)
+(use-package mode-icons
+  :ensure t
+  :config
+  (mode-icons-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode t))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . 'er/expand-region))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;avy jump mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "C-:") 'avy-goto-char)
-(global-set-key (kbd "C-'") 'avy-goto-char-2)
-(global-set-key (kbd "M-g f") 'avy-goto-line)
-(global-set-key (kbd "M-g w") 'avy-goto-word-1)
+(use-package avy
+  :ensure t
+  :bind (("C-:" . 'avy-goto-char)
+         ("C-'" . 'avy-goto-char-2)
+         ("M-g f".  'avy-goto-line)
+         ("M-g w" . 'avy-goto-word-1)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -371,26 +428,27 @@
 ;; Note that the built-in `describe-function' includes both functions
 ;; and macros. `helpful-function' is functions only, so we provide
 ;; `helpful-callable' as a drop-in replacement.
-(global-set-key (kbd "C-h f") #'helpful-callable)
+(use-package helpful
+  :ensure t
+  :bind (("C-h f" . #'helpful-callable)
+         ("C-h v" . #'helpful-variable)
+         ("C-h k" . #'helpful-key)
+         ;; Lookup the current symbol at point. C-c C-d is a common keybinding
+         ;; for this in lisp modes.
+         ("C-c C-d" . #'helpful-at-point)
 
-(global-set-key (kbd "C-h v") #'helpful-variable)
-(global-set-key (kbd "C-h k") #'helpful-key)
-;; Lookup the current symbol at point. C-c C-d is a common keybinding
-;; for this in lisp modes.
-(global-set-key (kbd "C-c C-d") #'helpful-at-point)
+         ;; Look up *F*unctions (excludes macros).
+         ;;
+         ;; By default, C-h F is bound to `Info-goto-emacs-command-node'. Helpful
+         ;; already links to the manual, if a function is referenced there.
+         ("C-h F" . #'helpful-function)
 
-;; Look up *F*unctions (excludes macros).
-;;
-;; By default, C-h F is bound to `Info-goto-emacs-command-node'. Helpful
-;; already links to the manual, if a function is referenced there.
-(global-set-key (kbd "C-h F") #'helpful-function)
-
-;; Look up *C*ommands.
-;;
-;; By default, C-h C is bound to describe `describe-coding-system'. I
-;; don't find this very useful, but it's frequently useful to only
-;; look at interactive functions.
-(global-set-key (kbd "C-h C") #'helpful-command)
+         ;; Look up *C*ommands.
+         ;;
+         ;; By default, C-h C is bound to describe `describe-coding-system'. I
+         ;; don't find this very useful, but it's frequently useful to only
+         ;; look at interactive functions.
+         ("C-h C" . #'helpful-command)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -401,36 +459,45 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; For documentation, see https://github.com/alezost/mwim.el
-(global-set-key (kbd "C-a") 'mwim-beginning-of-code-or-line)
-(global-set-key (kbd "C-e") 'mwim-end-of-code-or-line)
-(global-set-key (kbd "<home>") 'mwim-beginning-of-line-or-code)
-(global-set-key (kbd "<end>") 'mwim-end-of-line-or-code)
+(use-package mwim
+  :ensure t
+  :bind (("C-a" . 'mwim-beginning-of-code-or-line)
+         ("C-e" . 'mwim-end-of-code-or-line)
+         ("<home>" . 'mwim-beginning-of-line-or-code)
+         ("<end>" . 'mwim-end-of-line-or-code)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; For documentation, see https://github.com/DarthFennec/highlight-indent-guides
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(setq highlight-indent-guides-method 'character)
-(setq highlight-indent-guides-responsive 'stack)
+(use-package highlight-indent-guides
+  :ensure t
+  :init
+  (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-responsive 'stack)
+  :config
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; For documentation, see https://github.com/zenozeng/yafolding.el
+;; see also https://github.com/tarsius/bicycle as an alternative
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defvar yafolding-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
-    (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
-    (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
-    map))
+(use-package yafolding
+  :ensure t
+  :bind ("s-d y" . 'yafolding-discover)
+  :config
+  (defvar yafolding-mode-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "<C-S-return>") #'yafolding-hide-parent-element)
+      (define-key map (kbd "<C-M-return>") #'yafolding-toggle-all)
+      (define-key map (kbd "<C-return>") #'yafolding-toggle-element)
+      map))
 
-(global-set-key (kbd "s-d y") 'yafolding-discover)
-
-(add-hook 'prog-mode-hook
-          (lambda () (yafolding-mode)))
+  (add-hook 'prog-mode-hook
+          (lambda () (yafolding-mode))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -483,41 +550,45 @@ selected from `fringe-bitmaps'.")
 ;; `asciidoc', etc.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; initialise
-(pdf-tools-install)
-(setq-default pdf-view-display-size 'fit-page)
+(use-package pdf-tools
+  :ensure t
+  
+  :bind ((:map pdf-view-mode-map
+               ("C-s" . 'isearch-forward) ;; use isearch instead of swiper
+               ("h" . 'pdf-annot-add-highlight-markup-annotation)
+               ("t" . 'pdf-annot-add-text-annotation)
+               ("D" . 'pdf-annot-delete)))
+  
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-page)
+  
+  ;; automatically annotate highlights
+  (setq pdf-annot-activate-created-annotations t)
 
-;; automatically annotate highlights
-(setq pdf-annot-activate-created-annotations t)
+  ;; more fine-grained zooming
+  (setq pdf-view-resize-factor 1.1)
 
-;; use isearch instead of swiper
-(define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
-;; more fine-grained zooming
-(setq pdf-view-resize-factor 1.1)
+  ;; wrapper for save-buffer ignoring arguments
+  (defun bjm/save-buffer-no-args ()
+    "Save buffer ignoring arguments"
+    (save-buffer))
 
-;; keyboard shortcuts
-(define-key pdf-view-mode-map (kbd "h") 'pdf-annot-add-highlight-markup-annotation)
-(define-key pdf-view-mode-map (kbd "t") 'pdf-annot-add-text-annotation)
-(define-key pdf-view-mode-map (kbd "D") 'pdf-annot-delete)
+  ;; wait until map is available
+  (with-eval-after-load "pdf-annot"
+    (define-key
+      pdf-annot-edit-contents-minor-mode-map
+      (kbd "<return>") 'pdf-annot-edit-contents-commit)
+    (define-key
+      pdf-annot-edit-contents-minor-mode-map
+      (kbd "<S-return>") 'newline)
+    ;; save after adding comment
+    (advice-add 'pdf-annot-edit-contents-commit
+                :after 'bjm/save-buffer-no-args))
 
-;; wrapper for save-buffer ignoring arguments
-(defun bjm/save-buffer-no-args ()
-  "Save buffer ignoring arguments"
-  (save-buffer))
-
-;; wait until map is available
-(with-eval-after-load "pdf-annot"
-  (define-key
-    pdf-annot-edit-contents-minor-mode-map
-    (kbd "<return>") 'pdf-annot-edit-contents-commit)
-  (define-key
-    pdf-annot-edit-contents-minor-mode-map
-    (kbd "<S-return>") 'newline)
-  ;; save after adding comment
-  (advice-add 'pdf-annot-edit-contents-commit
-              :after 'bjm/save-buffer-no-args))
-
-;; auto refresh pdf-view when file changes
-(add-hook 'pdf-view-mode-hook 'auto-revert-mode)
+  ;; auto refresh pdf-view when file changes
+  (add-hook 'pdf-view-mode-hook 'auto-revert-mode)
+  (add-hook 'pdf-view-mode-hook (lambda () (linum-mode -1))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -532,20 +603,24 @@ selected from `fringe-bitmaps'.")
 ;; The following code assumes the existence of `asciidoc' package. For more
 ;; details, please see `http://asciidoc.org/'
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; setup files ending in ".adoc" to open in `adoc-mode'
-(add-to-list 'auto-mode-alist '("\\.adoc\\'" . adoc-mode))
+(use-package adoc-mode
+  :ensure t
+  :config
+  ;; setup files ending in ".adoc" to open in `adoc-mode'
+  (add-to-list 'auto-mode-alist '("\\.adoc\\'" . adoc-mode))
 
-(defun run-a2x-to-generate-pdf ()
-  "Generate the PDF representation of the current file."
-  (shell-command-to-string (format "a2x -f pdf %s" buffer-file-name)))
+  (defun run-a2x-to-generate-pdf ()
+    "Generate the PDF representation of the current file."
+    (shell-command-to-string (format "a2x -f pdf %s" buffer-file-name)))
 
-(add-hook 'adoc-mode-hook
-          (lambda () 
-            (add-hook 'after-save-hook
-                      'run-a2x-to-generate-pdf
-                      nil
-                      'make-it-local)))
+  (add-hook 'adoc-mode-hook
+            (lambda () 
+              (add-hook 'after-save-hook
+                        'run-a2x-to-generate-pdf
+                        nil
+                        'make-it-local))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -557,12 +632,98 @@ selected from `fringe-bitmaps'.")
   (string-equal system-type "windows-nt"))
 
 (when (my-system-type-is-windows)
-  (setq ispell-program-name "aspell"))
+  (setq ispell-program-name "aspell")
+  ;; Set default font
+  (set-face-attribute 'default nil
+                      :family "Consolas"
+                      :height 100
+                      :weight 'normal
+                      :width 'normal))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Set default font
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set up default font
+;; See also:
+;; https://github.com/tonsky/FiraCode/wiki/Emacs-instructions
+;; https://github.com/mickeynp/ligature.el
+;; https://github.com/tonsky/FiraCode/wiki/Linux-instructions#installing-with-a-package-manager
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (set-face-attribute 'default nil
-                    :family "Consolas"
+                    :family "Fira Code"
                     :height 100
                     :weight 'normal
                     :width 'normal)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Magit configuration
+;; https://magit.vc/
+;; https://magit.vc/manual/magit-refcard.pdf
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package magit
+  :ensure t)
+
+(use-package magit-annex
+  :ensure t)
+
+(use-package magit-filenotify
+  :ensure t)
+
+(use-package magit-find-file
+  :ensure t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Modern package management with paradox
+;; https://github.com/Malabarba/paradox
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package paradox
+  :ensure t
+  :init
+  ;;(setq paradox-github-token t)
+  (setq paradox-display-download-count t)
+  (setq paradox-display-star-count t)
+  :config
+  (paradox-enable))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Ripgrep configuration
+;; https://rgel.readthedocs.io/en/2.0.3/
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package rg
+  :ensure t
+  :config
+  (rg-enable-default-bindings)
+  ;;If you prefer to use a magit like interface as a complement to regular key
+  ;;maps, replace (rg-enable-default-bindings) with (rg-enable-menu). The menus
+  ;;are built with transient, which means that the menus can be modified in the
+  ;;same way as in magit.
+  )
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; counsel-tramp and ssh configuration
+;; https://github.com/masasam/emacs-counsel-tramp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package counsel-tramp
+  :ensure t
+  :init
+  (setq tramp-default-method "ssh")
+  :bind
+  ("C-c C-c s" . 'counsel-tramp)
+  :config
+  (add-hook 'counsel-tramp-pre-command-hook
+            '(lambda () (global-aggressive-indent-mode 0)
+				       (projectile-mode 0)
+				       (editorconfig-mode 0)))
+  (add-hook 'counsel-tramp-quit-hook
+            '(lambda () (global-aggressive-indent-mode 1)
+			         (projectile-mode 1)
+			         (editorconfig-mode 1))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
