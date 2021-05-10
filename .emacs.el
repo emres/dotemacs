@@ -78,6 +78,12 @@
 (global-display-line-numbers-mode)
 (set-face-foreground 'line-number "DarkOrange4")
 (set-face-foreground 'line-number-current-line "DarkOrange1")
+(defun display-line-numbers-equalize ()
+  "Equalize the width. For more information, 
+see: https://emacs.stackexchange.com/a/55166/8887"
+  (setq display-line-numbers-width
+        (length (number-to-string (line-number-at-pos (point-max))))))
+(add-hook 'find-file-hook 'display-line-numbers-equalize)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
