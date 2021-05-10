@@ -74,8 +74,10 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; line number mode
-(global-linum-mode)
+;; global line number mode
+(global-display-line-numbers-mode)
+(set-face-foreground 'line-number "DarkOrange4")
+(set-face-foreground 'line-number-current-line "DarkOrange1")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -370,8 +372,9 @@
   (use-package all-the-icons-dired
     ;; M-x all-the-icons-install-fonts
     :ensure t
-    :commands (all-the-icons-dired-mode)))
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+    :commands (all-the-icons-dired-mode))
+  (add-hook 'dired-mode-hook (lambda () (display-line-numbers-mode 0)))
+  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
