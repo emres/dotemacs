@@ -736,3 +736,24 @@ selected from `fringe-bitmaps'.")
 			         (projectile-mode 1)
 			         (editorconfig-mode 1))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Activate text scale minor mode, so that the current text scale is visible in
+;; the minibuffer, and when you increase text scale, it is shown in minibuffer
+;; as +1, +2, etc.
+;;
+;; To change text size (scale) in the current buffer:
+;;  C-x C-+
+;;  C-x C--
+;;  C-x C-=
+;;  C-x C-0
+;;
+;; See also:
+;;
+;;  - https://github.com/purcell/default-text-scale
+;;  - https://www.emacswiki.org/emacs/GlobalTextScaleMode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(text-scale-adjust 0)
+(text-scale-mode t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
