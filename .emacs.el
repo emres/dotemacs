@@ -757,3 +757,78 @@ selected from `fringe-bitmaps'.")
 (text-scale-adjust 0)
 (text-scale-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Bridging Islands in Emacs: re-builder and query-replace-regexp
+;; For details see:
+;; https://karthinks.com/software/bridging-islands-in-emacs-1/
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 're-builder)
+
+(defvar my/re-builder-positions nil
+  "Store point and region bounds before calling re-builder")
+(advice-add 're-builder
+            :before
+            (defun my/re-builder-save-state (&rest _)
+              "Save into `my/re-builder-positions' the point and region
+positions before calling `re-builder'."
+              (setq my/re-builder-positions
+                    (cons (point)
+                          (when (region-active-p)
+                            (list (region-beginning)
+                                  (region-end)))))))
+
+(defun reb-replace-regexp (&optional delimited)
+  "Run `query-replace-regexp' with the contents of re-builder. With
+non-nil optional argument DELIMITED, only replace matches
+surrounded by word boundaries."
+  (interactive "P")
+  (reb-update-regexp)
+  (let* ((re (reb-target-value 'reb-regexp)) ;; I had to change this line for
+                                             ;; GNU Emacs version 30.0.50
+         (replacement (query-replace-read-to
+                       re
+                       (concat "Query replace"
+                               (if current-prefix-arg
+                                   (if (eq current-prefix-arg '-) " backward" " word")
+                                 "")
+                               " regexp"
+                               (if (with-selected-window reb-target-window
+                                     (region-active-p)) " in region" ""))
+                       t))
+         (pnt (car my/re-builder-positions))
+         (beg (cadr my/re-builder-positions))
+         (end (caddr my/re-builder-positions)))
+    (with-selected-window reb-target-window
+      (goto-char pnt) ; replace with (goto-char (match-beginning 0)) if you want
+                      ; to control where in the buffer the replacement starts
+                      ; with re-builder
+      (setq my/re-builder-positions nil)
+      (reb-quit)
+      (query-replace-regexp re replacement delimited beg end))))
+
+;; Additionally, bind this new replace-regexp function (reb-replace-regexp) to
+;; RET in the re-builder buffer, and replace qrr entirely with just re-builder:
+(define-key reb-mode-map (kbd "RET") #'reb-replace-regexp)
+(define-key reb-lisp-mode-map (kbd "RET") #'reb-replace-regexp)
+(global-set-key (kbd "C-M-%") #'re-builder)
+
+;; Very briefly, the code works as follows:
+;;
+;; - Save the region and point positions into my/re-builder-positions before
+;;   invoking re-builder, since these are lost. This is done by advising the
+;;   function.
+;;
+;; - When you press RET, quit re-builder and call qrr with the built regexp, saved
+;;   point and region information.
+;;
+;; Lastly, if you want to insert a newline in the regexp-builder buffer you can
+;; now use C-q C-j. Entering literal newlines in a regexp definition is rare
+;; enough that dedicating RET to the much more useful qrr is a no-brainer.
+;;
+;; Yes, visual-regexp exists. But piling on another thousand lines of code here
+;; would be like bringing in a mountain of dirt to create a new self-contained
+;; island when the existing ones are lacking but a few connecting strings, and
+;; have the opportunity to form a denser network of interactions.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
