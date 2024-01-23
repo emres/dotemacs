@@ -528,7 +528,7 @@ see: https://emacs.stackexchange.com/a/55166/8887"
 (set-face-foreground 'highlight-changes-delete nil)
 (set-face-background 'highlight-changes-delete "#916868")
 
-;; ;; Remove the highlighted changes after the buffer is saved
+;; Remove the highlighted changes after the buffer is saved
 (add-hook 'after-save-hook
           (lambda ()
             (when highlight-changes-mode
