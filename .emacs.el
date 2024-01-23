@@ -8,6 +8,7 @@
 (show-paren-mode t)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(setq display-time-format "%a %Y-%m-%d %H:%m %Z %z")
 (display-time-mode t)
 (setq column-number-mode t)
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -527,7 +528,7 @@ see: https://emacs.stackexchange.com/a/55166/8887"
 (set-face-foreground 'highlight-changes-delete nil)
 (set-face-background 'highlight-changes-delete "#916868")
 
-;; Remove the highlighted changes after the buffer is saved
+;; ;; Remove the highlighted changes after the buffer is saved
 (add-hook 'after-save-hook
           (lambda ()
             (when highlight-changes-mode
@@ -543,13 +544,13 @@ see: https://emacs.stackexchange.com/a/55166/8887"
 selected from `fringe-bitmaps'.")
      (defadvice hilit-chg-make-ov (after hilit-chg-add-fringe activate)
        (mapc (lambda (ov)
-           (if (overlay-get ov 'hilit-chg)
-           (let ((fringe-anchor (make-string 1 ?x)))
-             (put-text-property 0 1 'display
-                    (list 'left-fringe highlight-fringe-mark)
-                    fringe-anchor)
-             (overlay-put ov 'before-string fringe-anchor))))
-         (overlays-at (ad-get-arg 1))))))
+               (if (overlay-get ov 'hilit-chg)
+                   (let ((fringe-anchor (make-string 1 ?x)))
+                     (put-text-property 0 1 'display
+                                        (list 'left-fringe highlight-fringe-mark)
+                                        fringe-anchor)
+                     (overlay-put ov 'before-string fringe-anchor))))
+             (overlays-at (ad-get-arg 1))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
