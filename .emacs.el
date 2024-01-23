@@ -8,7 +8,7 @@
 (show-paren-mode t)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
-(setq display-time-format "%a %Y-%m-%d %H:%m %Z %z")
+(setq display-time-format "%a %Y-%m-%d %H:%M %Z %z")
 (display-time-mode t)
 (setq column-number-mode t)
 (defalias 'yes-or-no-p 'y-or-n-p)
