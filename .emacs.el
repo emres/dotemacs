@@ -29,17 +29,14 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; scrolling settings
+;; Scrolling settings (Emacs 29+)
 (set-scroll-bar-mode nil)
-(setq scroll-step 1
-      scroll-conservatively 10000)
 
-;; scroll just one line when hitting the bottom of the window
-(setq scroll-step 1)
-(setq scroll-conservatively 1)
+;; Smooth scrolling: avoid sudden jumps
+(setq scroll-conservatively 10000)
 
-;; PgUp/Dn will return exactly to the starting point.
-(setq scroll-preserve-screen-position 1)
+;; Preserve cursor position when using PgUp/PgDn
+(setq scroll-preserve-screen-position t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
