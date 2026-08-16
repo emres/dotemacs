@@ -24,13 +24,13 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq-default indicate-empty-lines t)
+(toggle-indicate-empty-lines)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Scrolling settings (Emacs 29+)
-(set-scroll-bar-mode nil)
+(scroll-bar-mode -1)
 
 ;; Smooth scrolling: avoid sudden jumps
 (setq scroll-conservatively 10000)
@@ -43,12 +43,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; do not show start-up message
 (setq inhibit-startup-message t)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; highlight incremental search
-(setq search-highlight t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -76,12 +70,7 @@
 (global-display-line-numbers-mode)
 (set-face-foreground 'line-number "DarkOrange4")
 (set-face-foreground 'line-number-current-line "DarkOrange1")
-(defun display-line-numbers-equalize ()
-  "Equalize the width. For more information, 
-see: https://emacs.stackexchange.com/a/55166/8887"
-  (setq display-line-numbers-width
-        (length (number-to-string (line-number-at-pos (point-max))))))
-(add-hook 'find-file-hook 'display-line-numbers-equalize)
+(setq display-line-numbers-grow-only t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
