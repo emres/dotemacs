@@ -114,16 +114,9 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; For details, see the following web page:
-;; http://oremacs.com/2015/01/17/setting-up-ediff/
-(defmacro csetq (variable value)
-  `(funcall (or (get ',variable 'custom-set)
-                'set-default)
-            ',variable ,value))
-
-(csetq ediff-window-setup-function 'ediff-setup-windows-plain)
-(csetq ediff-split-window-function 'split-window-horizontally)
-(csetq ediff-diff-options "-w")
+(setopt ediff-window-setup-function 'ediff-setup-windows-plain)
+(setopt ediff-split-window-function 'split-window-horizontally)
+(setopt ediff-diff-options "-w")
 
 (winner-mode)
 (add-hook 'ediff-after-quit-hook-internal 'winner-undo)
@@ -145,12 +138,6 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Set up use-package
-;; Install use-package if missing
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 (require 'use-package)
 (setq use-package-always-ensure t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -575,7 +562,7 @@ selected from `fringe-bitmaps'.")
 
   ;; auto refresh pdf-view when file changes
   (add-hook 'pdf-view-mode-hook 'auto-revert-mode)
-  (add-hook 'pdf-view-mode-hook (lambda () (linum-mode -1))))
+  (add-hook 'pdf-view-mode-hook (lambda () (display-line-numbers-mode -1))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
