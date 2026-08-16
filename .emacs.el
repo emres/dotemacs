@@ -175,13 +175,12 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; set up windmove so that you can jump to windows using Shift+<Arrow Keys>
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
+(windmove-default-keybindings)
 
 ;; Or you can use M-1, M-2, M-3 to go to a window
-(use-package window-numbering
+(use-package winum
   :ensure t
-  :config (window-numbering-mode t))
+  :config (winum-mode))
 
 (use-package switch-window
   :ensure t
