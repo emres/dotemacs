@@ -361,8 +361,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package info-colors
   :ensure t
-  :config
-  (add-hook 'Info-selection-hook 'info-colors-fontify-node))
+  :hook (Info-selection . info-colors-fontify-node))
+
+(setq Info-fontify-node t)
+(setq Info-hide-note-references t)
+(setq Info-use-header-line t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
