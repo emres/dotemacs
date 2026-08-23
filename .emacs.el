@@ -791,3 +791,29 @@ surrounded by word boundaries."
   :init
   (marginalia-mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Put a lock icon if buffer is read-only.
+;; Put a pen icon is buffer modified.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun emre/modeline-status ()
+  (cond
+   (buffer-read-only "🔒 ")
+   ((buffer-modified-p) "✏️ ")
+   (t "")))
+
+(setq-default mode-line-position '(" %l:%c "))
+
+(add-hook 'after-init-hook
+  (lambda ()
+    (setq-default mode-line-format
+      (cons '(:eval (emre/modeline-status))
+            (default-value 'mode-line-format)))))
+
+(with-eval-after-load 'wombat-theme
+  (set-face-attribute 'mode-line-buffer-id nil :inherit nil
+                      :foreground nil :background nil)
+  (set-face-attribute 'mode-line-emphasis nil :inherit nil
+                      :foreground nil :background nil))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
