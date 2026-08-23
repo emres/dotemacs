@@ -487,7 +487,11 @@
 ;; buffer is changed, and asks if you really want to kill it. The following
 ;; settings let you easily see what changed since your last save.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-highlight-changes-mode t)
+(require 'hilit-chg)
+
+;; Highlight changes only when explicitly enabled with
+;; M-x highlight-changes-mode
+;; M-x highlight-changes--visible-mode
 (set-face-foreground 'highlight-changes nil)
 (set-face-background 'highlight-changes "blue")
 (set-face-foreground 'highlight-changes-delete nil)
