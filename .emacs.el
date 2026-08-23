@@ -486,14 +486,8 @@
 ;; When you try to kill a buffer that you modified, Emacs warns you that the
 ;; buffer is changed, and asks if you really want to kill it. The following
 ;; settings let you easily see what changed since your last save.
-;;
-;; By default, we set the visibility of highlighted changes to nil.
-;; If you want to see them, please run:
-;;
-;;     M-x highlight-changes-visible-mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (global-highlight-changes-mode t)
-(setq highlight-changes-visibility-initial-state nil) ; initially hide
 (set-face-foreground 'highlight-changes nil)
 (set-face-background 'highlight-changes "blue")
 (set-face-foreground 'highlight-changes-delete nil)
@@ -506,22 +500,6 @@
               (save-restriction
                 (widen)
                 (highlight-changes-remove-highlight (point-min) (point-max))))))
-
-;; Put a little square box on the left fring to indicate changed lines.
-(eval-after-load "hilit-chg"
-  '(progn
-     (defvar highlight-fringe-mark 'filled-square
-       "The fringe bitmap name marked at changed line. Should be
-selected from `fringe-bitmaps'.")
-     (defadvice hilit-chg-make-ov (after hilit-chg-add-fringe activate)
-       (mapc (lambda (ov)
-               (if (overlay-get ov 'hilit-chg)
-                   (let ((fringe-anchor (make-string 1 ?x)))
-                     (put-text-property 0 1 'display
-                                        (list 'left-fringe highlight-fringe-mark)
-                                        fringe-anchor)
-                     (overlay-put ov 'before-string fringe-anchor))))
-             (overlays-at (ad-get-arg 1))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
